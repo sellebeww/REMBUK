@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Vassel Goleyu">
+<meta name="copyright" content="Vassel Goleyu">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REMBUK — Aplikasi</title>
+<meta name="theme-color" content="#183447">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308131B'/%3E%3Cpath d='M14 40q18 16 36-6' fill='none' stroke='%232F6FED' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='28' r='7' fill='%2360A5FA'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient>
+  <symbol id="mark" viewBox="0 0 120 120">
+    <path d="M20 58V44l28-20 14 10" fill="none" stroke="#2A5FD0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+    <path d="M20 58v22l22 12" fill="none" stroke="#2A5FD0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+    <path d="M62 52V36l14-8 14 8v34" fill="none" stroke="url(#gb)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="52" cy="60" r="6.5" fill="#BFDBFE"/><path d="M41 80c0-8 5-12 11-12s11 4 11 12z" fill="#BFDBFE"/>
+    <circle cx="34" cy="68" r="5" fill="#93C5FD"/><path d="M25 83c0-6 4-9 9-9s9 3 9 9z" fill="#93C5FD"/>
+    <circle cx="70" cy="68" r="5" fill="#93C5FD"/><path d="M61 83c0-6 4-9 9-9s9 3 9 9z" fill="#93C5FD"/>
+    <path d="M12 86c14 24 52 26 80-6-18 9-38 10-80 6z" fill="url(#gb)" stroke="url(#gb)" stroke-width="4" stroke-linejoin="round"/>
+    <g stroke="url(#gb)" stroke-width="5" stroke-linecap="round"><path d="M80 12l-3 9"/><path d="M92 18l-6 7"/><path d="M98 30l-8 3"/></g>
+  </symbol>
+</defs></svg>
+<div id="app"></div>
+<div id="overlay"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript>Aplikasi REMBUK membutuhkan JavaScript.</noscript>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/features/wizard.js"></script>
+<script src="js/features/management.js"></script>
+<script src="js/features/resident.js"></script>
+<script>boot()</script>
+</body>
+</html>

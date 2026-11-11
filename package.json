@@ -1,0 +1,15 @@
+{
+  "name": "rembuk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REMBUK — company profile dan demo aplikasi koordinasi perbaikan bersama",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Vassel Goleyu",
+  "license": "UNLICENSED"
+}

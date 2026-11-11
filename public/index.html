@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Vassel Goleyu">
+<meta name="copyright" content="Vassel Goleyu">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REMBUK — Better Agreements. Shared Responsibility.</title>
+<meta name="description" content="REMBUK adalah platform koordinasi perbaikan bersama yang membantu pengelola gedung mencapai kesepakatan yang transparan, adil, dan terlacak.">
+<meta name="theme-color" content="#08131B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308131B'/%3E%3Cpath d='M14 40q18 16 36-6' fill='none' stroke='%232F6FED' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='28' r='7' fill='%2360A5FA'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="landing/css/landing.css">
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6" r="1.8"/><circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="18" r="1.8"/><path d="M6.4 7.2l3.6 3.4M17.6 7.2l-3.6 3.4M6.4 16.8l3.6-3.4M17.6 16.8l-3.6-3.4"/></g></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-2.5 6a3 3 0 005 0zM19 8l-2.5 6a3 3 0 005 0z"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14.5l2.5 2.5 5-5"/></g></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10H12l-5 4v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/></g></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12h6M9 15.5h6"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z"/><path d="M8.8 12l2.3 2.3 4.2-4.6"/></g></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></g></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a4 4 0 005 5L10 21a2.1 2.1 0 01-3-3L16.5 8.5"/><path d="M14.5 6.5l3-3 3 3-3 3z"/></g></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8.5" r="3"/><path d="M3 19.5c.7-3.2 3-4.8 6-4.8s5.3 1.6 6 4.8"/><circle cx="17" cy="9.5" r="2.4"/><path d="M17 14.5c2.2.2 3.6 1.6 4 4"/></g></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></g></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6.5 8 6.5M6 10v9.5h12V10"/></g></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 10h10M4 15h16M4 20h10"/></g></symbol>
+    <!-- REMBUK mark -->
+    <symbol id="mark" viewBox="0 0 120 120">
+      <path d="M20 58V44l28-20 14 10" fill="none" stroke="#2A5FD0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+      <path d="M20 58v22l22 12" fill="none" stroke="#2A5FD0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+      <path d="M62 52V36l14-8 14 8v34" fill="none" stroke="url(#gb)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="52" cy="60" r="6.5" fill="#BFDBFE"/><path d="M41 80c0-8 5-12 11-12s11 4 11 12z" fill="#BFDBFE"/>
+      <circle cx="34" cy="68" r="5" fill="#93C5FD"/><path d="M25 83c0-6 4-9 9-9s9 3 9 9z" fill="#93C5FD"/>
+      <circle cx="70" cy="68" r="5" fill="#93C5FD"/><path d="M61 83c0-6 4-9 9-9s9 3 9 9z" fill="#93C5FD"/>
+      <path d="M12 86c14 24 52 26 80-6-18 9-38 10-80 6z" fill="url(#gb)" stroke="url(#gb)" stroke-width="4" stroke-linejoin="round"/>
+      <g stroke="url(#gb)" stroke-width="5" stroke-linecap="round"><path d="M80 12l-3 9"/><path d="M92 18l-6 7"/><path d="M98 30l-8 3"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="REMBUK — ke atas"><svg aria-hidden="true"><use href="#mark"/></svg>REMBUK</a>
+    <nav class="links" id="links" aria-label="Navigasi utama">
+      <a href="#masalah">Masalah</a>
+      <a href="#alur">Cara Kerja</a>
+      <a href="#fitur">Fitur</a>
+      <a href="#simulasi">Simulasi</a>
+      <a href="#warga">Pengalaman Warga</a>
+      <a href="#peran">Peran</a>
+      <a href="#faq">FAQ</a>
+      <a href="app/" class="mob">Coba Demo</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="app/">Coba Demo</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="links"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill reveal"><i></i>Platform koordinasi perbaikan bersama</span>
+      <h1 class="reveal" style="--rd:.08s">Satu perbaikan.<br>Banyak kepentingan.<br><span class="grad">Satu kesepakatan yang transparan.</span></h1>
+      <p class="sub reveal" style="--rd:.16s">REMBUK membantu pengelola gedung memetakan siapa yang diuntungkan, siapa yang terdampak, dan bagaimana tanggung jawab dibagi, tanpa paksaan dan dengan jejak keputusan yang bisa diperiksa.</p>
+      <p class="tag reveal" style="--rd:.2s">Better Agreements. Shared Responsibility.</p>
+      <div class="cta-row reveal" style="--rd:.26s">
+        <a class="btn btn-primary" href="app/">Coba Demo <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#alur">Lihat Cara Kerja</a>
+      </div>
+      <div class="hero-meta reveal" style="--rd:.34s">
+        <div><b class="num">7</b>tahap kesepakatan</div>
+        <div><b class="num">5</b>keputusan terpisah</div>
+        <div><b class="num">100%</b>perubahan tercatat</div>
+      </div>
+    </div>
+    <div class="map-card reveal" style="--rd:.2s">
+      <svg class="map" id="map" viewBox="0 0 520 520" role="group" aria-label="Peta dampak perbaikan: pilih sebuah unit untuk melihat perannya"></svg>
+      <div class="detail" id="detail" aria-live="polite"></div>
+      <div class="legend" aria-hidden="true">
+        <span><i style="background:#318B83"></i>Penerima manfaat</span>
+        <span><i style="background:#E4A34A"></i>Akses diperlukan</span>
+        <span><i style="background:linear-gradient(90deg,#318B83 50%,#E4A34A 50%)"></i>Manfaat + akses</span>
+        <span><i style="background:#7C8FD8"></i>Terganggu sementara</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip" aria-hidden="true">
+  <div class="strip-track" id="strip"></div>
+</div>
+
+<!-- MASALAH -->
+<section class="sec" id="masalah">
+  <div class="wrap">
+    <span class="eyebrow reveal">Masalah yang kami selesaikan</span>
+    <h2 class="reveal">Perbaikan bersama sering macet bukan karena tekniknya, tapi karena kesepakatannya.</h2>
+    <p class="lead reveal">Yang diuntungkan, yang memberi akses, dan yang menanggung biaya sering bukan pihak yang sama. Tanpa struktur, semuanya tenggelam di grup chat. REMBUK menjawab lima pertanyaan dasar:</p>
+    <div class="q-grid" id="qgrid"></div>
+    <div class="callout reveal">
+      <p>REMBUK <strong>bukan</strong> sistem tiket komplain, bukan aplikasi voting, dan bukan pengganti aturan hukum. Ia adalah ruang kerja agar <strong>keputusan manusia yang berwenang</strong> menjadi lebih transparan, adil, dan terdokumentasi.</p>
+      <a class="btn btn-primary" href="#alur">Lihat alurnya <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ALUR -->
+<section class="sec process" id="alur">
+  <div class="wrap">
+    <span class="eyebrow reveal">Cara kerja</span>
+    <h2 class="reveal">Tujuh tahap dari temuan masalah sampai proyek ditutup.</h2>
+    <p class="lead reveal">Setiap tahap punya pemilik, bukti, dan catatan perubahan. Pilih tahap untuk melihat apa yang terjadi di dalamnya.</p>
+    <div class="steps reveal" id="steps" role="tablist" aria-label="Tahap kesepakatan"><div class="fill" id="stepFill"></div></div>
+    <div class="step-panel reveal" id="stepPanel" role="tabpanel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- FITUR -->
+<section class="sec" id="fitur">
+  <div class="wrap">
+    <span class="eyebrow reveal">Fitur unggulan</span>
+    <h2 class="reveal">Dirancang untuk kesepakatan, bukan sekadar dashboard.</h2>
+    <p class="lead reveal">Setiap modul menjawab masalah nyata: siapa terdampak, bagaimana biaya dijelaskan, kapan akses diatur, dan bagaimana keberatan ditangani.</p>
+    <div class="bento" id="bento"></div>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section class="sec preview" id="produk">
+  <div class="wrap">
+    <span class="eyebrow reveal">Sekilas produk</span>
+    <h2 class="reveal">Pengelola langsung paham status setiap proyek.</h2>
+    <p class="lead reveal">Cuplikan dashboard manajemen dengan data contoh Northpoint Residence. Gerakkan kursor di atas jendela.</p>
+    <div class="win reveal" id="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Building Overview · Northpoint Residence</span></div>
+      <div class="win-body">
+        <div class="side"><b>REMBUK</b><div class="on">Overview</div><div>Repair Projects</div><div>Impact &amp; Stakeholders</div><div>Cost Allocation</div><div>Access &amp; Schedule</div><div>Decisions &amp; Agreements</div><div>Work Execution</div><div>Reports &amp; Analytics</div></div>
+        <div class="main">
+          <h4>Building Overview</h4>
+          <div class="s">Pantau usulan perbaikan, respons pemangku kepentingan, dan tanggung jawab bersama.</div>
+          <div class="kpis">
+            <div class="kpi"><small>Proyek perbaikan aktif</small><b data-count="12">0</b></div>
+            <div class="kpi"><small>Kesepakatan berjalan</small><b data-count="4">0</b></div>
+            <div class="kpi"><small>Respons akses menunggu</small><b data-count="7">0</b></div>
+            <div class="kpi"><small>Estimasi anggaran</small><b data-count="186500000" data-prefix="Rp " data-fmt="1">0</b></div>
+          </div>
+          <div class="tbl"><table>
+            <thead><tr><th>ID</th><th>Proyek</th><th>Menara</th><th>Terdampak</th><th>Manfaat</th><th>Tahap</th></tr></thead>
+            <tbody>
+              <tr><td>RMB-2026-014</td><td>Penggantian Pipa Air Bersama</td><td>Tower A</td><td>3 unit</td><td>12 unit</td><td><span class="chip warn">Menunggu Umpan Balik</span></td></tr>
+              <tr><td>RMB-2026-013</td><td>Inspeksi Distribusi Listrik</td><td>Tower B</td><td>2 unit</td><td>18 unit</td><td><span class="chip blue">Revisi Usulan</span></td></tr>
+              <tr><td>RMB-2026-012</td><td>Perbaikan Drainase Bersama</td><td>Tower A</td><td>4 unit</td><td>21 unit</td><td><span class="chip ok">Terjadwal</span></td></tr>
+            </tbody></table></div>
+          <div class="prog" aria-hidden="true"><i class="d"></i><i class="d"></i><i class="d"></i><i class="c"></i><i></i><i></i><i></i></div>
+          <div class="prog-l" aria-hidden="true"><span>Assessment</span><span>Mapping</span><span>Proposal</span><span>Consultation</span><span>Agreement</span><span>Execution</span><span>Completed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULASI -->
+<section class="sec sim" id="simulasi">
+  <div class="wrap">
+    <span class="eyebrow reveal">Coba sendiri</span>
+    <h2 class="reveal">Fair Allocation Workspace: bandingkan skenario, jelaskan alasannya.</h2>
+    <p class="lead reveal">Ubah porsi dana bersama, lihat usulan kontribusi tiap unit berubah seketika. Tidak ada skor kewajaran tersembunyi, hanya aturan dan alasan yang terbuka.</p>
+    <div class="sim-card reveal">
+      <div class="sim-head">
+        <div><small>Estimasi total biaya · RMB-2026-014</small><b id="simTotal">Rp 18.750.000</b></div>
+        <div class="tabs" role="tablist" aria-label="Skenario alokasi" id="simTabs"></div>
+      </div>
+      <div class="sim-body">
+        <div class="sim-l">
+          <h3 id="simName"></h3>
+          <div class="sl-row"><label for="fund">Porsi dana pemeliharaan bersama</label><b id="fundV">70%</b></div>
+          <input type="range" id="fund" min="0" max="100" step="5" value="70" aria-describedby="simNote">
+          <div class="bars" id="bars" role="img" aria-label="Perbandingan porsi dana bersama dan kontribusi unit per skenario"></div>
+          <div class="bl"><span><i style="background:var(--teal)"></i>Dana bersama</span><span><i style="background:var(--navy2)"></i>Usulan kontribusi unit</span></div>
+          <div class="facts" id="facts"></div>
+          <div class="why" id="why"></div>
+          <button class="btn btn-outline" id="simReset" type="button" style="margin-top:16px;width:100%">Kembalikan ke nilai awal</button>
+        </div>
+        <div class="sim-r">
+          <h3>Pratinjau usulan kontribusi · 12 unit penerima manfaat</h3>
+          <div style="overflow:auto"><table class="ct">
+            <thead><tr><th>Unit</th><th>Dasar alokasi</th><th class="am">Usulan kontribusi</th></tr></thead>
+            <tbody id="ctBody"></tbody>
+            <tfoot><tr><td colspan="2">Total kontribusi unit</td><td class="am" id="ctSum"></td></tr></tfoot>
+          </table></div>
+          <p class="disc" id="simNote">Ilustrasi dengan data contoh. Istilah “usulan kontribusi” dipakai sampai pihak berwenang menetapkan kewajiban. Aturan sebenarnya mengikuti kebijakan dan keputusan gedung, bukan perangkat lunak ini.</p>
+        </div>
+      </div>
+      <div class="sim-foot"><span id="simVal"></span><button class="btn btn-primary" id="simShare" type="button" style="min-height:42px;padding:10px 18px">Simpan sebagai draf usulan</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- WARGA -->
+<section class="sec resident" id="warga">
+  <div class="wrap res-grid">
+    <div>
+      <span class="eyebrow reveal">Pengalaman warga</span>
+      <h2 class="reveal">Tiga keputusan berbeda. Tiga jawaban berbeda. Tanpa tekanan.</h2>
+      <p class="lead reveal">Mendukung perbaikan tidak otomatis berarti memberi akses, dan memberi akses tidak berarti menyetujui kontribusi. Coba ponsel di samping: setiap tab adalah keputusan yang berdiri sendiri.</p>
+      <div class="principles">
+        <div class="pr reveal"><svg aria-hidden="true"><use href="#i-user"/></svg><div><b>Bahasa yang menghormati</b><span>“Pengaturan alternatif diminta”, bukan “unit tidak kooperatif”.</span></div></div>
+        <div class="pr reveal"><svg aria-hidden="true"><use href="#i-clock"/></svg><div><b>Diam bukan persetujuan</b><span>Tanpa respons, status tetap “Menunggu Keputusan”. Tidak ada nama warga yang diumumkan.</span></div></div>
+        <div class="pr reveal"><svg aria-hidden="true"><use href="#i-eye"/></svg><div><b>Hanya yang relevan untuk unit Anda</b><span>Warga hanya melihat kontribusi dan data unitnya sendiri.</span></div></div>
+      </div>
+    </div>
+    <div class="reveal" style="--rd:.15s">
+      <div class="phone"><div class="screen">
+        <div class="top"><small>Halo, Alex</small><b>Unit A-08-03</b></div>
+        <div class="ph-b">
+          <div class="ph-card"><strong>Common Water Pipe Replacement</strong><p>Tower A · tim membutuhkan akses unit ±2 jam untuk inspeksi. Penutup pelindung disediakan.</p></div>
+          <div class="ptabs" role="tablist" aria-label="Jenis keputusan" id="ptabs"></div>
+          <form id="resForm" novalidate></form>
+          <ul class="hist" id="hist" aria-label="Riwayat keputusan Anda"></ul>
+          <p class="silent">Belum merespons? Status Anda tetap <b>Menunggu Keputusan</b>. Diam tidak dianggap setuju.</p>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PERAN -->
+<section class="sec roles" id="peran">
+  <div class="wrap">
+    <span class="eyebrow reveal">Satu platform, enam pengalaman</span>
+    <h2 class="reveal">Setiap peran hanya melihat dan melakukan apa yang menjadi wewenangnya.</h2>
+    <p class="lead reveal">Dari administrator gedung hingga vendor, hak akses dibatasi menurut tanggung jawab dan privasi.</p>
+    <div class="role-grid reveal">
+      <div class="rtabs" id="rtabs" role="tablist" aria-label="Peran pengguna" aria-orientation="vertical"></div>
+      <div class="rpanel" id="rpanel" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sec" id="prinsip">
+  <div class="wrap">
+    <span class="eyebrow reveal">Prinsip &amp; kepercayaan</span>
+    <h2 class="reveal">Transparan oleh desain. Tidak memaksa oleh desain.</h2>
+    <div class="trust-grid">
+      <div class="tbox yes reveal"><h3>Yang kami pastikan</h3><ul id="yesL"></ul></div>
+      <div class="tbox no reveal" style="--rd:.1s"><h3>Yang tidak akan kami lakukan</h3><ul id="noL"></ul></div>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat reveal"><b data-count="7">0</b><span>tahap kesepakatan terstruktur</span></div>
+      <div class="stat reveal" style="--rd:.08s"><b data-count="5">0</b><span>jenis keputusan yang dipisah</span></div>
+      <div class="stat reveal" style="--rd:.16s"><b data-count="6">0</b><span>peran dengan hak akses berbeda</span></div>
+      <div class="stat reveal" style="--rd:.24s"><b>0</b><span>skor kewajaran tersembunyi</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec faq" id="faq">
+  <div class="wrap">
+    <span class="eyebrow reveal">Pertanyaan umum</span>
+    <h2 class="reveal">Yang sering ditanyakan pengelola dan warga.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section class="sec contact" id="kontak">
+  <div class="wrap c-grid">
+    <div>
+      <span class="eyebrow reveal">Mulai dari satu proyek</span>
+      <h2 class="reveal">Bicara langsung dengan tim kami.</h2>
+      <p class="lead reveal">Ceritakan satu perbaikan bersama yang sulit disepakati. Kami tunjukkan bagaimana REMBUK memetakan dampak, membandingkan skenario biaya, dan mengatur akses.</p>
+      <ul class="c-list">
+        <li class="reveal"><svg aria-hidden="true"><use href="#i-home"/></svg>Cocok untuk apartemen, kondominium, dan gedung komersial.</li>
+        <li class="reveal"><svg aria-hidden="true"><use href="#i-shield"/></svg>Data unit dan kontribusi dilindungi per peran.</li>
+        <li class="reveal"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ingin langsung mencoba? Buka aplikasinya langsung tanpa perlu mendaftar.</li>
+      </ul>
+      <a class="btn btn-primary reveal" style="margin-top:28px" href="app/">Coba Demo <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="f reveal" style="--rd:.12s">
+      <form id="cForm" novalidate>
+        <h3>Hubungi kami</h3>
+        <p class="intro">Isi singkat, kami hubungi Anda dalam 1–2 hari kerja.</p>
+        <div class="row">
+          <div class="fld"><label for="cName">Nama lengkap</label><input id="cName" name="name" autocomplete="name" required><div class="em">Mohon isi nama Anda.</div></div>
+          <div class="fld"><label for="cMail">Email kerja</label><input id="cMail" name="email" type="email" autocomplete="email" required><div class="em">Masukkan alamat email yang valid.</div></div>
+        </div>
+        <div class="row">
+          <div class="fld"><label for="cOrg">Organisasi / gedung</label><input id="cOrg" name="org" autocomplete="organization" required><div class="em">Mohon isi nama organisasi atau gedung.</div></div>
+          <div class="fld"><label for="cRole">Peran Anda</label><select id="cRole" name="role" required><option value="">Pilih peran…</option><option>Pengelola gedung</option><option>Koordinator pemeliharaan</option><option>Komite / perwakilan pemilik</option><option>Pemilik unit</option><option>Lainnya</option></select><div class="em">Pilih salah satu peran.</div></div>
+        </div>
+        <div class="fld"><label for="cMsg">Ceritakan kasus perbaikan Anda <span style="font-weight:400;color:var(--muted)">(opsional)</span></label><textarea id="cMsg" name="msg" maxlength="600"></textarea></div>
+        <button class="btn btn-primary" type="submit" id="cBtn"><span class="spin"></span><span id="cBtnT">Kirim Pesan</span></button>
+      </form>
+      <div class="ok-box" id="cOk" role="status">
+        <div class="chk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Permintaan Anda sudah tercatat</h3>
+        <p id="cOkP">Terima kasih. Tim REMBUK akan menghubungi Anda.</p>
+        <button class="btn btn-outline" id="cAgain" type="button">Kirim permintaan lain</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top"><svg aria-hidden="true"><use href="#mark"/></svg>REMBUK</a>
+        <p style="max-width:340px">Platform koordinasi perbaikan bersama untuk pengelola properti. Satu perbaikan. Banyak kepentingan. Satu kesepakatan yang transparan.</p>
+      </div>
+      <div><h4>Produk</h4><a href="#alur">Cara Kerja</a><a href="#fitur">Fitur</a><a href="#simulasi">Simulasi</a><a href="#produk">Sekilas Produk</a></div>
+      <div><h4>Perusahaan</h4><a href="#masalah">Masalah</a><a href="#prinsip">Prinsip</a><a href="#peran">Peran</a><a href="#faq">FAQ</a></div>
+      <div><h4>Hubungi</h4><a href="app/">Coba Demo</a><a href="#kontak">Hubungi Kami</a><a href="#warga">Untuk Warga</a><a href="#top">Kembali ke atas</a></div>
+    </div>
+    <div class="copy"><span>© <span id="yr">2026</span> Vassel Goleyu · REMBUK. Seluruh hak dilindungi.</span><span>REMBUK mendukung keputusan manusia yang berwenang; bukan pengganti ketentuan hukum atau perjanjian properti.</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg aria-hidden="true"><use href="#i-check"/></svg><span id="toastT"></span></div>
+<button class="totop" id="totop" type="button" aria-label="Kembali ke atas"><svg aria-hidden="true"><use href="#i-up"/></svg></button>
+
+<script src="landing/js/landing.js"></script>
+</body>
+</html>
