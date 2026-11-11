@@ -396,3 +396,7 @@ footer{background:#050d13;color:rgba(255,255,255,.6);padding:56px 0 30px;font-si
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none}
 }
+/* audit: kartu terakhir bento mengisi baris penuh */
+@media(min-width:1041px){.fc.dark{grid-column:1/-1}.fc.dark p{max-width:640px}}
+.tbl td:first-child,.tbl th:first-child{white-space:nowrap}
+@media(max-width:600px){.kpi b{font-size:clamp(15px,5vw,20px);white-space:nowrap}}

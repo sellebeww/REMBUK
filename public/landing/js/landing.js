@@ -77,7 +77,7 @@ $('#qgrid').innerHTML=Q.map((q,i)=>`<div class="q reveal" style="--rd:${i*.08}s"
 
 /* ---------- steps ---------- */
 const S=[
- ['Assessment','Masalah teknis didokumentasikan lengkap dengan bukti. Asumsi yang belum terverifikasi tidak ditampilkan sebagai fakta.',['Laporan inspeksi & foto','Status: Belum terverifikasi → Terverifikasi','Verifikasi tanggung jawab fasilitas']],
+ ['Penilaian','Masalah teknis didokumentasikan lengkap dengan bukti. Asumsi yang belum terverifikasi tidak ditampilkan sebagai fakta.',['Laporan inspeksi & foto','Status: Belum terverifikasi → Terverifikasi','Verifikasi tanggung jawab fasilitas']],
  ['Pemetaan','Unit dibagi menjadi penerima manfaat dan unit yang perlu memberi akses atau mengalami gangguan. Satu unit bisa masuk keduanya.',['Peta dampak & pemangku kepentingan','Pembeda jelas: akses ≠ pembayaran','Profil dampak per unit']],
  ['Usulan','Skenario biaya dibangun dengan sumber dana, aturan, dan alasan. Disebut “usulan kontribusi” sampai pihak berwenang menetapkan kewajiban.',['Skenario A, B, C yang dapat diedit','Total harus sama dengan anggaran','Rencana akses & mitigasi']],
  ['Konsultasi','Usulan diterbitkan untuk umpan balik. Warga menjawab hal-hal terpisah: dukungan, akses, jadwal, dan kontribusi.',['Pusat Resolusi untuk setiap keberatan','Revisi dengan catatan perubahan','Tanpa persetujuan diam-diam']],

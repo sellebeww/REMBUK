@@ -204,3 +204,17 @@ dl.kv{display:grid;grid-template-columns:130px 1fr;gap:12px 16px;align-items:cen
 @media print{body *{visibility:hidden}.modal,.modal *{visibility:visible}.modal{position:absolute;left:0;top:0;width:100%;box-shadow:none}.mf,.mh button{display:none}}
 
 .hub .hl{stroke-dasharray:4 6;animation:hflow 1.6s linear infinite}.hub .hr{transform-origin:170px 100px;animation:hpulse 3s ease-out infinite;stroke-width:1.5;opacity:0}.hub .h2{animation-delay:1.5s}.hub .hn{transform-box:fill-box;animation:hfloat 4s ease-in-out infinite}@keyframes hflow{to{stroke-dashoffset:-20}}@keyframes hpulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.3);opacity:0}}@keyframes hfloat{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){.hub *{animation:none!important}}
+/* audit: sel tabel tidak memotong isi */
+.uc{white-space:nowrap;flex-shrink:0}
+table.t td .chip{white-space:normal;text-align:left;line-height:1.3;padding-top:3px;padding-bottom:3px}
+table.t td input.in.sm{min-width:150px}table.t td input.in.sm[type=number]{min-width:96px}.t-mit{min-width:270px!important}
+table.t td select.in.sm{min-width:120px}
+table.t td.b{white-space:nowrap}
+@media(max-width:860px){
+  .kpi b{font-size:clamp(18px,6vw,24px);overflow-wrap:anywhere}
+  .top>a.btn{padding:0;width:40px;min-width:40px;justify-content:center}.top>a.btn span{display:none}
+  .top .srch{flex:1;min-width:0}
+}
+@media(max-width:1500px){.gw{grid-template-columns:1fr 1fr}.gw>:last-child{grid-column:1/-1}}
+@media(max-width:1100px){.gw{grid-template-columns:1fr}}
+.gw>*{min-width:0}
