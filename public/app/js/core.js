@@ -3,7 +3,7 @@
 /* Format lama menyimpan S.activity (daftar bebas ubah). Ubah menjadi log berantai hash; entri lama dianggap titik awal. */
 function migrate(v){if(!Array.isArray(v.events)){v.events=(v.activity||[]).slice().reverse().reduce((l,a)=>RembukCore.appendEvent(l,{at:a.t,actor:a.who,pid:a.pid,action:a.what,prev:a.prev,next:a.next}),[]);delete v.activity}return v}
 function load(){try{const v=RembukCore.parseStoredState(localStorage.getItem(KEY));if(v)return migrate(v)}catch(e){}return seed()}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){if(window.REMOTE_MODE||(window.REMBUK_CONFIG&&window.REMBUK_CONFIG.mode==='supabase'))return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load();
 /* Pulihkan unit demo dari sesi tersimpan. */
 try{if(S.session&&DEMO_UNIT[S.session.role])MY=DEMO_UNIT[S.session.role]}catch(e){}
@@ -106,6 +106,7 @@ function render(){
   $('#app').innerHTML=S.session?shell():loginView();
   $('#overlay').innerHTML=overlayHTML();
   document.body.style.overflow=(ui.modal||ui.drawer)?'hidden':'';
+  if(window.REMOTE_MODE){const m=$('#main');if(m)m.insertAdjacentHTML('afterbegin',banner('<b>Mode Supabase (pratinjau baca-saja).</b> Data dimuat dari server sesuai peran Anda. Perubahan di layar ini belum disimpan ke server.','info','info'))}
   /* Aksesibilitas: area tabel yang dapat digulir harus bisa difokus keyboard. */
   $$('.tw').forEach(el=>{if(el.scrollWidth>el.clientWidth||el.scrollHeight>el.clientHeight){el.tabIndex=0;el.setAttribute('role','region');if(!el.getAttribute('aria-label'))el.setAttribute('aria-label','Tabel, dapat digulir')}});
   if(fk){const el=$(`[data-fk="${fk}"]`);if(el){el.focus();try{el.setSelectionRange(pos,pos)}catch(e){}}}
@@ -134,7 +135,8 @@ function loginView(){
   <div class="fld"><label class="l" for="pw">${t('login.pass')}</label><div class="pw"><input id="pw" class="in ${l.pE?'bad':''}" type="${l.show?'text':'password'}" autocomplete="current-password" data-bind="ui.login.pass" value="${esc(l.pass)}" aria-invalid="${!!l.pE}"><button type="button" data-act="showPw" aria-label="${l.show?'Sembunyikan':'Tampilkan'} kata sandi">${ic('eye')}</button></div>${l.pE?`<div class="fe">${l.pE}</div>`:''}</div>
   <div class="row between" style="margin-bottom:18px"><label class="row sm" style="gap:8px"><input type="checkbox" data-bind="ui.login.remember" ${l.remember?'checked':''}> ${t('login.remember')}</label><button type="button" class="btn g sm" data-act="forgot">${t('login.forgot')}</button></div>
   <button class="btn p w lg" type="submit" ${l.loading?'disabled':''}>${l.loading?'Memproses…':t('login.submit')}</button>
-  <div class="demo"><div class="sm b" style="margin-bottom:4px">Masuk cepat tanpa kata sandi</div><div class="sm muted" style="margin-bottom:10px">Pilih peran untuk melihat pengalaman yang berbeda.</div><div class="col" style="gap:8px"><button type="button" class="btn n" data-act="demo" data-r="admin">${ic('building')}Enter as Building Management</button><button type="button" class="btn o" data-act="demo" data-r="owner">${ic('key')}Enter as Unit Owner</button><button type="button" class="btn o" data-act="demo" data-r="coord">${ic('tool')}Enter as Maintenance Coordinator</button><button type="button" class="btn o" data-act="demo" data-r="resident">${ic('user')}Enter as Resident (Penghuni)</button><button type="button" class="btn o" data-act="demo" data-r="vendor">${ic('wrench')}Enter as Vendor</button></div><div class="sm muted" style="margin-top:10px">Atau gunakan akun uji: <code>admin@northpoint.id</code> / <code>rembuk123</code></div></div>
+  ${(window.REMBUK_CONFIG&&window.REMBUK_CONFIG.mode==='supabase')?'':`<div class="demo"><div class="sm b" style="margin-bottom:4px">Masuk cepat tanpa kata sandi</div><div class="sm muted" style="margin-bottom:10px">Pilih peran untuk melihat pengalaman yang berbeda.</div><div class="col" style="gap:8px"><button type="button" class="btn n" data-act="demo" data-r="admin">${ic('building')}Enter as Building Management</button><button type="button" class="btn o" data-act="demo" data-r="owner">${ic('key')}Enter as Unit Owner</button><button type="button" class="btn o" data-act="demo" data-r="coord">${ic('tool')}Enter as Maintenance Coordinator</button><button type="button" class="btn o" data-act="demo" data-r="resident">${ic('user')}Enter as Resident (Penghuni)</button><button type="button" class="btn o" data-act="demo" data-r="vendor">${ic('wrench')}Enter as Vendor</button></div><div class="sm muted" style="margin-top:10px">Atau gunakan akun uji: <code>admin@northpoint.id</code> / <code>rembuk123</code></div></div>
+  `}
   <p class="sm muted" style="margin-top:18px;text-align:center"><label class="sm" for="lg">${t('lang.label')}</label> <select id="lg" class="in sm" style="width:auto" data-act="lang">${Object.keys(CATALOGS).map(k=>`<option value="${k}" ${k===LANG?'selected':''}>${k}</option>`).join('')}</select> · <button type="button" class="btn g sm" data-act="info" data-t="Hubungi administrator">Contact administrator</button> · <button type="button" class="btn g sm" data-act="info" data-t="Kebijakan privasi">Privacy policy</button> · <button type="button" class="btn g sm" data-act="info" data-t="Ketentuan layanan">Terms of service</button></p><p class="sm" style="text-align:center;margin-top:6px"><a href="../">← Kembali ke situs REMBUK</a></p></form></div></div>`;
 }
 function setSession(r,email){const a=Object.values(ACCOUNTS).find(x=>x[1]===r);S.session={role:r,name:a[2],label:a[3]};if(r==='vendor')S.session.vendor=a[2];if(DEMO_UNIT[r])MY=DEMO_UNIT[r];save();ui.login={...ui.login,pass:'',err:'',eE:'',pE:'',loading:false,ok:false};go(defaultView())}
@@ -204,4 +206,4 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(ui.modal||ui.drawer||ui.menu||ui.nav){ui.modal=ui.drawer=ui.menu=null;ui.nav=false;render()}}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-act][tabindex]')&&e.target.tagName!=='BUTTON'){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}
 });
-function boot(){applyHash();render();setTimeout(()=>{try{maybeRemind()}catch(e){}},300)}
+function boot(){applyHash();render();if(window.REMBUK_CONFIG&&window.REMBUK_CONFIG.mode==='supabase'&&window.remoteBoot)remoteBoot();setTimeout(()=>{try{maybeRemind()}catch(e){}},300)}

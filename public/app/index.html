@@ -34,6 +34,7 @@
 <noscript>Aplikasi REMBUK membutuhkan JavaScript.</noscript>
 <script src="config.js"></script>
 <script src="js/vendor/rembuk-core.js"></script>
+<script>if(window.REMBUK_CONFIG&&window.REMBUK_CONFIG.mode==='supabase'){document.write('<script src="js/vendor/rembuk-supabase.js"><\/script>')}</script>
 <script src="js/i18n.js"></script>
 <script src="js/data.js"></script>
 <script src="js/core.js"></script>
@@ -41,6 +42,7 @@
 <script src="js/features/management.js"></script>
 <script src="js/features/resident.js"></script>
 <script src="js/features/vendor.js"></script>
+<script src="js/features/remote.js"></script>
 <script>boot()</script>
 <script>
 /* PWA: daftarkan service worker (hanya HTTPS atau localhost). Gagal mendaftar tidak mengganggu aplikasi. */
