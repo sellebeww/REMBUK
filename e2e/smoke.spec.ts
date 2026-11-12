@@ -4,6 +4,8 @@ import { expect, test, type Page } from '@playwright/test';
 const ROLES = [
   { r: 'admin', views: ['overview', 'projects', 'impact', 'cost', 'access', 'resolution', 'decisions', 'exec', 'reports', 'buildings', 'docs', 'notif', 'settings'] },
   { r: 'coord', views: ['overview', 'projects', 'impact', 'access', 'resolution', 'exec', 'docs', 'notif'] },
+  { r: 'resident', views: ['r-overview', 'r-requests', 'r-access', 'r-proposals', 'r-docs', 'notif', 'profile'] },
+  { r: 'vendor', views: ['v-overview', 'v-schedule', 'v-work', 'v-docs', 'notif'] },
   { r: 'owner', views: ['r-overview', 'r-requests', 'r-access', 'r-proposals', 'r-docs', 'notif', 'profile'] },
 ] as const;
 

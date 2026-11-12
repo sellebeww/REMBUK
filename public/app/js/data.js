@@ -1,7 +1,11 @@
 'use strict';
 /* REMBUK demo — seed data (all fictional). */
 const KEY='rembuk-demo-v2';
-const MY='A-08-03';
+/* Unit milik pengguna demo yang sedang masuk (diatur saat masuk; lihat setSession). */
+let MY='A-08-03';
+/* Jam demo: data contoh berpusat pada Nov 2026, jadi mode demo memakai tanggal tetap agar tenggat tidak basi. Mode produksi memakai jam nyata. */
+const DEMO_TODAY='2026-11-11';
+const DEMO_UNIT={owner:'A-08-03',resident:'A-08-04'};
 const STAGES=['Assessment','Stakeholder Mapping','Proposal','Consultation','Agreement','Execution','Completed'];
 const STATUS_ID={'Draft':'Draf','Under Assessment':'Sedang Dinilai','Stakeholder Mapping':'Pemetaan Pemangku Kepentingan','Proposal Preparation':'Penyusunan Usulan','Awaiting Feedback':'Menunggu Umpan Balik','Proposal Revision':'Revisi Usulan','Awaiting Authorization':'Menunggu Otorisasi','Scheduled':'Terjadwal','In Progress':'Sedang Berjalan','Completed':'Selesai','Paused':'Dijeda','Disputed':'Dalam Sengketa','Cancelled':'Dibatalkan'};
 const STATUS_TONE={'Draft':'gray','Under Assessment':'gray','Stakeholder Mapping':'blue','Proposal Preparation':'blue','Awaiting Feedback':'warn','Proposal Revision':'blue','Awaiting Authorization':'warn','Scheduled':'ok','In Progress':'teal','Completed':'ok','Paused':'gray','Disputed':'danger','Cancelled':'gray'};
@@ -79,6 +83,7 @@ function seed(){
    N('n3','mgmt','Approval required','Revisi usulan menunggu tinjauan komite','Proyek RMB-2026-013 membutuhkan tinjauan perwakilan.','RMB-2026-013','Anda pengelola proyek ini.','Tinjau revisi','—',1),
    N('r1','res','Access request','Permintaan akses untuk unit Anda','Tim pemeliharaan membutuhkan akses sementara ke unit Anda untuk inspeksi pipa bersama.','RMB-2026-014','Unit A-08-03 berada pada jalur pipa vertikal.','Tinjau permintaan akses sebelum 13 Nov 2026','13 Nov 2026'),
    N('r2','res','Cost proposal published','Usulan kontribusi diterbitkan untuk umpan balik','Anda dapat meninjau usulan kontribusi unit Anda dan memberi tanggapan.','RMB-2026-014','Unit Anda termasuk penerima manfaat.','Tinjau usulan (belum menjadi kewajiban)','17 Nov 2026'),
+   N('v1','vend','Work progress','Jadwal kerja RMB-2026-012 dikonfirmasi','Jadwal 22 Nov dikonfirmasi koordinator. Lihat jadwal akses unit pada menu Jadwal.','RMB-2026-012','Anda vendor yang ditugaskan pada proyek ini.','Siapkan tim sesuai jadwal','22 Nov 2026'),
    N('r3','res','Work progress','Jadwal perbaikan drainase terkonfirmasi','Perbaikan RMB-2026-012 dijadwalkan 22 Nov. Unit Anda tidak memerlukan akses.','RMB-2026-012','Unit Anda penerima manfaat proyek ini.','Tidak ada tindakan','—',1)
   ];
   const DOC=(id,pid,name,cat,vis,size,by,date)=>({id,pid,name,cat,vis,size,by,date});
@@ -90,8 +95,9 @@ function seed(){
    DOC('f5','RMB-2026-014','Catatan Persetujuan Akses.xlsx','Consent records','mgmt','95 KB','Sari Wulandari','11 Nov 2026'),
    DOC('f6','RMB-2026-012','Notulen Rapat Komite 05-11-2026.pdf','Consent records','mgmt','310 KB','Komite Pemilik','05 Nov 2026'),
    DOC('f7','RMB-2026-008','Laporan Penyelesaian — Plafon Lobi.pdf','Completion reports','all','1,8 MB','Dimas Prakoso','16 Okt 2026'),
-   DOC('f8','RMB-2026-008','Invoice Akhir.pdf','Final invoices','mgmt','210 KB','PT Griya Karya','15 Okt 2026')
+   DOC('f8','RMB-2026-008','Invoice Akhir.pdf','Final invoices','mgmt','210 KB','PT Griya Karya','15 Okt 2026'),
+   DOC('f9','RMB-2026-012','Instruksi Kerja Lapangan (contoh).pdf','Work instructions','vendor','540 KB','Dimas Prakoso','07 Nov 2026')
   ];
-  const users=[['Sari Wulandari','Administrator Gedung','Aktif'],['Dimas Prakoso','Koordinator Pemeliharaan','Aktif'],['Komite Pemilik','Komite / Perwakilan','Aktif'],['Alex Pratama','Pemilik Unit (A-08-03)','Aktif'],['PT Tirta Mandiri','Vendor','Aktif'],['Bima Sakti','Penghuni (A-08-07)','Nonaktif']];
-  return {session:null,projects,concerns,decisions,activity,notes,docs,users,seq:{p:15,c:104,d:6,n:10,f:9},prefs:{email:true,wa:false,reminder:'Sedang'},rhist:[]};
+  const users=[['Sari Wulandari','Administrator Gedung','Aktif'],['Dimas Prakoso','Koordinator Pemeliharaan','Aktif'],['Komite Pemilik','Komite / Perwakilan','Aktif'],['Alex Pratama','Pemilik Unit (A-08-03)','Aktif'],['PT Tirta Mandiri','Vendor','Aktif'],['Maya Lestari','Penghuni (A-08-04)','Aktif'],['Bima Sakti','Penghuni (A-08-07)','Nonaktif']];
+  return {session:null,projects,concerns,decisions,activity,notes,docs,users,seq:{p:15,c:104,d:6,n:10,f:10},prefs:{email:true,wa:false,reminder:'Sedang'},rhist:[]};
 }
