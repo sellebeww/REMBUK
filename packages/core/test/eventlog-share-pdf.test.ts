@@ -121,7 +121,8 @@ describe('i18n dan state', () => {
     expect(parseStoredState('{bukan json')).toBeNull();
     expect(parseStoredState(null)).toBeNull();
     expect(parseStoredState('{"projects":[]}')).toBeNull();
-    expect(isValidState({ projects: [{ id: 'x', title: 't', costs: [], units: [], sc: {} }], concerns: [], decisions: [], activity: [], notes: [], docs: [], users: [], seq: {} })).toBe(true);
+    expect(isValidState({ projects: [{ id: 'x', title: 't', costs: [], units: [], sc: {} }], concerns: [], decisions: [], events: [], notes: [], docs: [], users: [], seq: {} })).toBe(true);
+    expect(isValidState({ projects: [], concerns: [], decisions: [], notes: [], docs: [], users: [], seq: {} })).toBe(false);
     expect(isValidState({ projects: [{ id: 1 }], concerns: [], decisions: [], activity: [], notes: [], docs: [], users: [], seq: {} })).toBe(false);
   });
 });

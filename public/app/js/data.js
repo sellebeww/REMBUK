@@ -99,5 +99,6 @@ function seed(){
    DOC('f9','RMB-2026-012','Instruksi Kerja Lapangan (contoh).pdf','Work instructions','vendor','540 KB','Dimas Prakoso','07 Nov 2026')
   ];
   const users=[['Sari Wulandari','Administrator Gedung','Aktif'],['Dimas Prakoso','Koordinator Pemeliharaan','Aktif'],['Komite Pemilik','Komite / Perwakilan','Aktif'],['Alex Pratama','Pemilik Unit (A-08-03)','Aktif'],['PT Tirta Mandiri','Vendor','Aktif'],['Maya Lestari','Penghuni (A-08-04)','Aktif'],['Bima Sakti','Penghuni (A-08-07)','Nonaktif']];
-  return {session:null,projects,concerns,decisions,activity,notes,docs,users,seq:{p:15,c:104,d:6,n:10,f:10},prefs:{email:true,wa:false,reminder:'Sedang'},rhist:[]};
+  const events=activity.slice().reverse().reduce((l,a)=>RembukCore.appendEvent(l,{at:a.t,actor:a.who,pid:a.pid,action:a.what,prev:a.prev,next:a.next}),[]);
+  return {session:null,projects,concerns,decisions,events,notes,docs,users,seq:{p:15,c:104,d:6,n:10,f:10},prefs:{email:true,wa:false,reminder:'Sedang'},rhist:[]};
 }

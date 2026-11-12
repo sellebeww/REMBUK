@@ -1,6 +1,8 @@
 'use strict';
 /* REMBUK demo — core: state, helpers, router, shell, login, overlays */
-function load(){try{const v=RembukCore.parseStoredState(localStorage.getItem(KEY));if(v)return v}catch(e){}return seed()}
+/* Format lama menyimpan S.activity (daftar bebas ubah). Ubah menjadi log berantai hash; entri lama dianggap titik awal. */
+function migrate(v){if(!Array.isArray(v.events)){v.events=(v.activity||[]).slice().reverse().reduce((l,a)=>RembukCore.appendEvent(l,{at:a.t,actor:a.who,pid:a.pid,action:a.what,prev:a.prev,next:a.next}),[]);delete v.activity}return v}
+function load(){try{const v=RembukCore.parseStoredState(localStorage.getItem(KEY));if(v)return migrate(v)}catch(e){}return seed()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load();
 /* Pulihkan unit demo dari sesi tersimpan. */
@@ -59,7 +61,9 @@ function pendingAction(p){
   if(alt)return `Tinjau ${alt} permintaan jadwal alternatif`;if(oc)return `Tanggapi ${oc} kekhawatiran`;if(acc)return `Konfirmasi ${acc} akses diterima`;if(req)return `Menunggu ${req} respons akses`;
   return {'Proposal Revision':'Selesaikan revisi usulan','Under Assessment':'Verifikasi penilaian teknis','Stakeholder Mapping':'Lengkapi pemetaan unit','Scheduled':'Siapkan pelaksanaan','In Progress':'Perbarui progres','Draft':'Lengkapi dan terbitkan','Awaiting Authorization':'Menunggu otorisasi','Completed':'—'}[p.status]||'Pantau respons';
 }
-function log(pid,who_,what,prev='—',next='—'){S.activity.unshift({t:now(),who:who_,what,prev,next,pid})}
+/* Log kejadian append-only: hanya ada appendEvent; tidak ada fungsi ubah atau hapus. Setiap entri memuat hash entri sebelumnya. */
+function log(pid,who_,what,prev='—',next='—'){S.events=RembukCore.appendEvent(S.events,{at:now(),actor:who_,pid,action:what,prev,next})}
+const activityList=()=>S.events.slice().reverse().map(e=>({t:e.at,who:e.actor,what:e.action,prev:e.prev,next:e.next,pid:e.pid,seq:e.seq}));
 function notify(to,cat,title,body,pid,why,action,deadline='—'){S.notes.unshift({id:'n'+(S.seq.n++),to,cat,title,body,pid,why,action,deadline,read:false,t:now()})}
 function addDecision(pid,type,unit,by,ver,status,basis,note){S.decisions.unshift({id:'D-'+(S.seq.d++),pid,type,unit,by,ver,date:now().split(',')[0],status,basis:basis||'',note:note||''})}
 
