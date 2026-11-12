@@ -6,3 +6,4 @@ public/app/config.js
 test-results/
 playwright-report/
 .vercel
+public/app/sw.js

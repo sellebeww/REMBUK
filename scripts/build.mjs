@@ -1,7 +1,8 @@
 // Copyright (c) 2026 Vassel Goleyu. All rights reserved.
 // Build: bundel packages/core menjadi skrip peramban dan tulis config.js dari environment.
 import { build } from 'esbuild';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,7 +30,18 @@ if (!coreOnly) {
     join(root, 'public/app/config.js'),
     `/* Dibangkitkan oleh scripts/build.mjs. Kunci anon Supabase bersifat publik; jangan pernah menaruh service role di sini. */\nwindow.REMBUK_CONFIG = ${JSON.stringify(config)};\n`,
   );
-  console.log(`build ok, mode=${config.mode}`);
+  // Service worker: daftar berkas aplikasi + versi dari hash isinya, agar cache diperbarui saat berkas berubah.
+  const appDir = join(root, 'public/app');
+  const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
+  const files = walk(appDir).map((f) => f.slice(appDir.length + 1).replaceAll('\\', '/')).filter((f) => f !== 'sw.js').sort();
+  const hash = createHash('sha256');
+  for (const f of files) hash.update(f).update(readFileSync(join(appDir, f)));
+  const assets = ['./', ...files];
+  const sw = readFileSync(join(root, 'scripts/sw.template.js'), 'utf8')
+    .replace('__VERSION__', hash.digest('hex').slice(0, 12))
+    .replace('__ASSETS__', JSON.stringify(assets));
+  writeFileSync(join(appDir, 'sw.js'), sw);
+  console.log(`build ok, mode=${config.mode}, ${assets.length} berkas offline`);
 } else {
   console.log('build core ok');
 }

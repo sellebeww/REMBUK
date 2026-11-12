@@ -7,6 +7,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>REMBUK — Aplikasi</title>
 <meta name="theme-color" content="#183447">
+<meta name="description" content="REMBUK: koordinasi perbaikan bersama di gedung. Mode demo memakai data fiktif.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308131B'/%3E%3Cpath d='M14 40q18 16 36-6' fill='none' stroke='%232F6FED' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='28' r='7' fill='%2360A5FA'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
@@ -38,5 +41,11 @@
 <script src="js/features/resident.js"></script>
 <script src="js/features/vendor.js"></script>
 <script>boot()</script>
+<script>
+/* PWA: daftarkan service worker (hanya HTTPS atau localhost). Gagal mendaftar tidak mengganggu aplikasi. */
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+addEventListener('offline',()=>toast('Anda sedang offline. Data demo tersimpan di perangkat ini.'));
+addEventListener('online',()=>toast('Kembali online.'));
+</script>
 </body>
 </html>
