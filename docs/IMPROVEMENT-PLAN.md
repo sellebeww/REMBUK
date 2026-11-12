@@ -93,4 +93,13 @@ Prinsip privasi: warga tidak melihat baris unit lain; vendor tidak melihat kekha
 
 ## 6. Hasil audit runtime
 
-Diisi setelah E2E penyapu semua halaman dijalankan (lihat bagian akhir dokumen ini).
+E2E penyapu semua halaman (5 peran) tidak menemukan galat JavaScript. Bug logika yang ditemukan lewat pembacaan kode dan tes, semuanya sudah diperbaiki:
+
+- Cek "Persentase dana bersama + kontribusi unit = 100%" selalu bernilai benar (ditanam `true`); kini dihitung.
+- Label "Pendanaan eksternal (terverifikasi) Rp 0" mengklaim verifikasi tanpa data; kini "Belum dicatat".
+- Tenggat karangan ('17 Nov', '13 Nov') ditanam pada notifikasi baru; dihapus.
+- Slot akses bawaan dan "hari ini" ditanam pada tanggal tetap; kini memakai jam demo atau jam nyata.
+- Klaim "catatan bergaya immutable" pada riwayat aktivitas tidak benar (daftar bebas ubah); kini log berantai hash dengan verifikasi.
+- Setelah peran vendor ditambahkan, halaman notifikasi sempat menampilkan notifikasi pengelola (kebocoran); diperbaiki dan diuji.
+- Pada RLS: `verify_event_chain` awalnya dapat dipanggil non-pengelola karena `current_user` dalam SECURITY DEFINER; ditemukan tes, diperbaiki. Baris draf proyek sempat terlihat lewat tabel turunan; kini dibatasi di fungsi bantu.
+- Kontras warna (WCAG AA), nama tombol pemilih gedung pada 360 px, dan area tabel yang dapat digulir tanpa fokus keyboard diperbaiki berdasarkan axe.
