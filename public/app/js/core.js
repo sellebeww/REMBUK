@@ -199,4 +199,4 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(ui.modal||ui.drawer||ui.menu||ui.nav){ui.modal=ui.drawer=ui.menu=null;ui.nav=false;render()}}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-act][tabindex]')&&e.target.tagName!=='BUTTON'){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}
 });
-function boot(){applyHash();render()}
+function boot(){applyHash();render();setTimeout(()=>{try{maybeRemind()}catch(e){}},300)}
