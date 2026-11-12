@@ -4,8 +4,9 @@
 export function isValidState(raw: unknown): boolean {
   if (!raw || typeof raw !== 'object') return false;
   const s = raw as Record<string, unknown>;
-  const arrays = ['projects', 'concerns', 'decisions', 'activity', 'notes', 'docs', 'users'];
+  const arrays = ['projects', 'concerns', 'decisions', 'notes', 'docs', 'users'];
   if (!arrays.every((k) => Array.isArray(s[k]))) return false;
+  if (!Array.isArray(s.events) && !Array.isArray(s.activity)) return false; // 'activity' = format lama sebelum log berantai
   if (!s.seq || typeof s.seq !== 'object') return false;
   return (s.projects as unknown[]).every((p) => {
     const o = p as Record<string, unknown>;
