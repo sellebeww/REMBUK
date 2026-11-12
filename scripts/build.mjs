@@ -30,6 +30,13 @@ if (!coreOnly) {
     join(root, 'public/app/config.js'),
     `/* Dibangkitkan oleh scripts/build.mjs. Kunci anon Supabase bersifat publik; jangan pernah menaruh service role di sini. */\nwindow.REMBUK_CONFIG = ${JSON.stringify(config)};\n`,
   );
+  if (config.mode === 'supabase') {
+    await build({
+      entryPoints: [join(root, 'packages/client/src/index.ts')],
+      outfile: join(root, 'public/app/js/vendor/rembuk-supabase.js'),
+      bundle: true, format: 'iife', globalName: 'RembukSupabase', target: 'es2020', minify: true,
+    });
+  }
   // Service worker: daftar berkas aplikasi + versi dari hash isinya, agar cache diperbarui saat berkas berubah.
   const appDir = join(root, 'public/app');
   const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));

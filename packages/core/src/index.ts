@@ -11,3 +11,4 @@ export * from './share';
 export * from './pdf';
 export * from './i18n';
 export * from './state';
+export * from './remote';
