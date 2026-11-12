@@ -1,6 +1,6 @@
 'use strict';
 /* REMBUK demo — core: state, helpers, router, shell, login, overlays */
-function load(){try{const j=localStorage.getItem(KEY);if(j)return JSON.parse(j)}catch(e){}return seed()}
+function load(){try{const v=RembukCore.parseStoredState(localStorage.getItem(KEY));if(v)return v}catch(e){}return seed()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load();
 const ui={view:null,args:[],menu:null,modal:null,drawer:null,nav:false,f:{},q:'',stF:'',towF:'',prioF:'',before:'',stageF:null,pview:'list',pid:'RMB-2026-014',sc:'A',cal:'month',btab:'info',stab:'org',cStF:'',cCatF:'',nCat:'',docCat:'',uq:'',uT:'',dT:'',dP:'',rtab:'support',rP:'',rT:'',rS:'',wiz:null,wstep:1,werr:{},thumbs:{},selUnit:null,mapF:{},login:{email:'',pass:'',show:false,remember:true,eE:'',pE:'',err:'',loading:false,ok:false}};
@@ -11,7 +11,7 @@ const $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rp=n=>'Rp '+Math.round(n).toLocaleString('id-ID');
 const now=()=>{const d=new Date();return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' WIB'};
-const fdate=iso=>{if(!iso)return '—';const [y,m,d]=iso.split('-');return `${d} ${['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][+m-1]} ${y}`};
+const fdate=iso=>iso?RembukCore.formatIdDate(iso):'—';
 const ICON={home:'<path d="M4 11l8-6.5 8 6.5M6 10v9.5h12V10"/>',wrench:'<path d="M14.5 6.5a4 4 0 005 5L10 21a2.1 2.1 0 01-3-3L16.5 8.5"/><path d="M14.5 6.5l3-3 3 3-3 3z"/>',map:'<circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6" r="1.8"/><circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="18" r="1.8"/><path d="M6.4 7.2l3.6 3.4M17.6 7.2l-3.6 3.4M6.4 16.8l3.6-3.4M17.6 16.8l-3.6-3.4"/>',scale:'<path d="M12 4v16M7 20h10M5 8h14"/><path d="M5 8l-2.5 6a3 3 0 005 0zM19 8l-2.5 6a3 3 0 005 0z"/>',cal:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14.5l2.5 2.5 5-5"/>',chat:'<path d="M4 5.5h16v10H12l-5 4v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/>',doc:'<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12h6M9 15.5h6"/>',tool:'<path d="M4 20l9-9M13 11l-2-4 3-3 4 2 2 4-3 3z"/>',chart:'<path d="M4 20V5M4 20h16M8 16v-5M12 16V8M16 16v-3"/>',building:'<path d="M5 20V4h10v16M15 9h4v11M3 20h18M8 8h2M8 12h2M8 16h2"/>',folder:'<path d="M3.5 6.5h6l2 2h9v10h-17z"/>',bell:'<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15zM10 20a2 2 0 004 0"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.7M12 17h.01"/>',user:'<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',plus:'<path d="M12 5v14M5 12h14"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',left:'<path d="M15 6l-6 6 6 6"/>',right:'<path d="M9 6l6 6-6 6"/>',down:'<path d="M6 10l6 6 6-6"/>',up:'<path d="M6 14l6-6 6 6"/>',shield:'<path d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z"/><path d="M8.8 12l2.3 2.3 4.2-4.6"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',upload:'<path d="M12 16V5M7 9l5-5 5 5M5 20h14"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',log:'<path d="M4 5h16M4 10h10M4 15h16M4 20h10"/>',alert:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',download:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',print:'<path d="M7 9V4h10v5M7 17H5v-6h14v6h-2M8 14h8v6H8z"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',mail:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/>',logout:'<path d="M10 5H5v14h5M15 8l4 4-4 4M19 12H9"/>',refresh:'<path d="M20 11a8 8 0 00-14-4L4 9M4 4v5h5M4 13a8 8 0 0014 4l2-2M20 20v-5h-5"/>',file:'<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',users:'<circle cx="9" cy="8.5" r="3"/><path d="M3 19.5c.7-3.2 3-4.8 6-4.8s5.3 1.6 6 4.8"/><circle cx="17" cy="9.5" r="2.4"/><path d="M17 14.5c2.2.2 3.6 1.6 4 4"/>',phone:'<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>'};
 const ic=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[n]||''}</svg>`;
 const chip=(t,tone='gray')=>`<span class="chip ${tone}">${esc(t)}</span>`;
@@ -34,23 +34,17 @@ const role=()=>S.session&&S.session.role;
 const isRes=()=>role()==='owner';
 const can=a=>({admin:['create','cost','authorize','resolve','revise','exec','access','settings','manage','reports'],coord:['exec','access','resolve','tech'],owner:[]}[role()]||[]).includes(a);
 const who=()=>({admin:'Sari Wulandari',coord:'Dimas Prakoso',owner:'Unit '+MY}[role()]);
-const total=p=>p.costs.reduce((a,c)=>a+c.qty*c.price,0);
-const benUnits=p=>p.units.filter(u=>u.k==='ben'||u.k==='both');
-const accUnits=p=>p.units.filter(u=>u.k==='acc'||u.k==='both');
-const disUnits=p=>p.units.filter(u=>u.k==='dis');
+const total=p=>RembukCore.totalCost(p.costs);
+const benUnits=p=>p.units.filter(u=>RembukCore.isBeneficiary(u.k));
+const accUnits=p=>p.units.filter(u=>RembukCore.isAccessProvider(u.k));
+const disUnits=p=>p.units.filter(u=>RembukCore.isDisturbed(u.k));
 const uOf=(p,id)=>p.units.find(u=>u.id===id);
 const activeP=()=>S.projects.filter(p=>!['Completed','Cancelled'].includes(p.status));
 const unitsBy=st=>S.projects.flatMap(p=>p.units.filter(u=>u.access===st).map(u=>({p,u})));
 const openC=()=>S.concerns.filter(c=>!['Resolved','Closed'].includes(c.status));
 const stageOf=s=>STAGE_OF[s]==null?0:STAGE_OF[s];
-function alloc(p,sc){
-  const T=total(p),step=T%1000===0?1000:1,fund=Math.min(T,Math.round(T*sc.pct/100/step)*step),owner=T-fund,bu=benUnits(p);
-  if(!bu.length)return{T,fund,owner,rows:[],unassigned:owner,sum:fund};
-  const w=bu.map(u=>u.k==='both'?sc.acc:1),sw=w.reduce((a,b)=>a+b,0),raw=w.map(x=>owner*x/sw),base=raw.map(r=>Math.floor(r/step)*step);
-  const rem=Math.round((owner-base.reduce((a,b)=>a+b,0))/step);
-  raw.map((r,i)=>[r-base[i],i]).sort((a,b)=>b[0]-a[0]).slice(0,rem).forEach(([,i])=>base[i]+=step);
-  return{T,fund,owner,rows:bu.map((u,i)=>({id:u.id,amt:base[i],w:w[i],acc:u.k==='both'})),unassigned:0,sum:fund+base.reduce((a,b)=>a+b,0)};
-}
+/* Pembagian biaya: logika murni ada di packages/core (RembukCore.allocate), diuji unit. */
+function alloc(p,sc){return RembukCore.allocate(p.costs,p.units,sc)}
 function pendingAction(p){
   const alt=p.units.filter(u=>u.access==='Alternative Requested').length,req=p.units.filter(u=>u.access==='Request Sent').length,acc=p.units.filter(u=>u.access==='Accepted').length,oc=S.concerns.filter(c=>c.pid===p.id&&!['Resolved','Closed'].includes(c.status)).length;
   if(p.status==='Paused')return 'Proyek dijeda';if(p.status==='Disputed')return 'Tinjau sengketa';
