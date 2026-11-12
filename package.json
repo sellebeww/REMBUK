@@ -1,15 +1,33 @@
 {
   "name": "rembuk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "REMBUK — company profile dan demo aplikasi koordinasi perbaikan bersama",
+  "description": "REMBUK: koordinasi perbaikan bersama untuk gedung bersama (pemilik, penghuni, pengelola, vendor)",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "npm run build:core && node server.js",
+    "start": "node server.js",
+    "build": "node scripts/build.mjs",
+    "build:core": "node scripts/build.mjs --core-only",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build && npm run test:e2e"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "author": "Vassel Goleyu",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.20.5",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "typescript": "5.9",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  }
 }
