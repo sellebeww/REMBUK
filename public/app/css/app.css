@@ -1,4 +1,4 @@
-:root{--navy:#183447;--navy2:#294B5D;--teal:#318B83;--teal-l:#E7F3F0;--bg:#F6F8F9;--white:#fff;--text:#253746;--muted:#6F7E89;--border:#E4E9EC;--warn:#E4A34A;--warn-bg:#FFF5E7;--ok:#398A6B;--ok-bg:#EAF5EF;--danger:#C95E5E;--danger-bg:#FBECEC;--blue:#2F6FED;--blue-l:#60A5FA;--blue-bg:#E8F0FF;--ink:#08131B;--r:12px;--sh:0 1px 2px rgba(24,52,71,.05),0 6px 20px rgba(24,52,71,.06)}
+:root{--navy:#183447;--navy2:#294B5D;--teal:#25756D;--teal-l:#E7F3F0;--bg:#F6F8F9;--white:#fff;--text:#253746;--muted:#56656F;--border:#E4E9EC;--warn:#E4A34A;--warn-bg:#FFF5E7;--ok:#2B7557;--ok-bg:#EAF5EF;--danger:#B04040;--danger-bg:#FBECEC;--blue:#2F6FED;--blue-l:#60A5FA;--blue-bg:#E8F0FF;--ink:#08131B;--r:12px;--sh:0 1px 2px rgba(24,52,71,.05),0 6px 20px rgba(24,52,71,.06)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);line-height:1.5;font-size:14.5px;-webkit-font-smoothing:antialiased}
@@ -31,7 +31,7 @@ svg.ic{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-wid
 .dot{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;padding:0 4px}
 /* chips */
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
-.chip.teal{background:var(--teal-l);color:var(--teal)}.chip.warn{background:var(--warn-bg);color:#a86d17}.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.danger{background:var(--danger-bg);color:var(--danger)}.chip.gray{background:#eef2f4;color:var(--muted)}.chip.blue{background:var(--blue-bg);color:#2554c7}
+.chip.teal{background:var(--teal-l);color:var(--teal)}.chip.warn{background:var(--warn-bg);color:#8a5a10}.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.danger{background:var(--danger-bg);color:var(--danger)}.chip.gray{background:#eef2f4;color:var(--muted)}.chip.blue{background:var(--blue-bg);color:#2554c7}
 /* cards */
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh)}
 .card>.ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}

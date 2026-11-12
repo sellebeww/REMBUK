@@ -1,3 +1,9 @@
 node_modules/
 .DS_Store
 .env
+public/app/js/vendor/
+public/app/config.js
+test-results/
+playwright-report/
+.vercel
+public/app/sw.js
