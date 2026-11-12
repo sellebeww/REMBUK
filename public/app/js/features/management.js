@@ -343,15 +343,47 @@ A.unitDir=d=>{const u=unitDir().find(x=>x.id===d.id);const parts=S.projects.filt
 /* ---------- notifications ---------- */
 const NCATS=['New repair project','Access request','Schedule update','Cost proposal published','New concern response','Proposal revision','Approval required','Vendor confirmation','Work progress','Completion notice'];
 V.notif=()=>{
-  const to=isRes()?'res':'mgmt',l=S.notes.filter(n=>n.to===to&&(!ui.nCat||n.cat===ui.nCat));
+  const to=inbox(),l=S.notes.filter(n=>n.to===to&&(!ui.nCat||n.cat===ui.nCat));
   return pageHead('Notifications','Pemberitahuan yang jelas dan tidak berulang: apa yang terjadi, mengapa Anda menerimanya, dan tindakan yang diperlukan.',`<button class="btn o" data-act="readAll">Tandai semua terbaca</button><button class="btn o" data-act="emailPrev">${ic('mail')}Pratinjau email</button><button class="btn o" data-act="waPrev">${ic('phone')}Pratinjau WhatsApp</button>`)+
   `<div class="chips" style="margin-bottom:14px"><button class="btn sm ${!ui.nCat?'n':'o'}" data-act="nCat" data-c="">Semua</button>${NCATS.map(c=>`<button class="btn sm ${ui.nCat===c?'n':'o'}" data-act="nCat" data-c="${c}">${c}</button>`).join('')}</div>`+
+  reminderCard()+
   (l.length?`<div class="col">${l.map(n=>`<div class="card" style="${n.read?'':'border-left:4px solid var(--teal)'}"><div class="cb"><div class="row between"><div class="row">${chip(n.cat,'teal')}${n.read?'':chip('Baru','blue')}<span class="sm muted">${n.t}</span></div>${n.read?'':`<button class="btn g sm" data-act="readOne" data-id="${n.id}">Tandai terbaca</button>`}</div><h3 style="margin:8px 0 4px">${esc(n.title)}</h3><p>${esc(n.body)}</p><dl class="kv" style="margin-top:10px"><dt>Proyek</dt><dd>${n.pid}</dd><dt>Mengapa Anda menerima</dt><dd>${esc(n.why)}</dd><dt>Tindakan</dt><dd>${esc(n.action)}</dd><dt>Tenggat</dt><dd>${esc(n.deadline)}</dd></dl>${n.action!=='Tidak ada tindakan'?`<button class="btn p sm" style="margin-top:10px" data-act="openNote2" data-id="${n.id}">Buka</button>`:''}</div></div>`).join('')}</div>`:card('Notifikasi',empty('Tidak ada notifikasi untuk kategori ini.','bell')));
 };
+/* ---------- pengingat tenggat: hanya menampilkan dan, atas izin pengguna, notifikasi lokal di peramban ini. Tidak ada pesan terkirim ke pihak lain. ---------- */
+function myDue(){
+  const projs=isVendor()?vProjects():isRes()?myProjects():S.projects;
+  const notes=S.notes.filter(n=>n.to===inbox()).map(n=>({id:n.id,title:n.title,pid:n.pid,deadline:n.deadline,read:n.read}));
+  return RembukCore.dueItems(projs.map(p=>({id:p.id,title:p.title,status:p.status,deadline:p.deadline,units:p.units})),notes,todayStr(),isRes()?{mineUnitIds:[MY]}:{});
+}
+const DUE_TXT=d=>d.level==='overdue'?'Lewat '+Math.abs(d.days)+' hari':d.level==='today'?'Hari ini':d.days+' hari lagi';
+const DUE_TONE=d=>d.level==='overdue'?'danger':(d.level==='today'||d.level==='soon')?'warn':'gray';
+function reminderText(items){return 'Pengingat REMBUK ('+RembukCore.formatIdDate(todayStr())+'):\n'+items.map(d=>'- '+d.label+' ('+DUE_TXT(d)+', '+RembukCore.formatIdDate(d.date)+')').join('\n')+'\nIni pengingat informasi, bukan keputusan atau kewajiban.'}
+function reminderCard(){
+  const items=myDue(),np=typeof Notification!=='undefined'?Notification.permission:'unsupported';
+  return card('Pengingat tenggat',(items.length?`<div class="col" style="gap:0;margin:-4px -4px 12px">${items.map(d=>`<div class="row between" style="padding:10px 4px;border-bottom:1px solid var(--border)"><div>${esc(d.label)}<div class="sm muted">${RembukCore.formatIdDate(d.date)}</div></div>${chip(DUE_TXT(d),DUE_TONE(d))}</div>`).join('')}</div><div class="row"><button class="btn o sm" data-act="remCopy">${ic('file')}Salin pengingat</button></div>`:`<p class="muted">Tidak ada tenggat dalam 14 hari ke depan.</p>`)+
+   `<div style="height:12px"></div>`+toggle('S.prefs.remNotif',!!S.prefs.remNotif,'Notifikasi peramban untuk tenggat','Hanya di perangkat ini, sekali per hari, saat Anda membuka aplikasi. Tidak ada pesan yang dikirim ke orang lain.')+
+   (S.prefs.remNotif&&np!=='granted'?`<div class="ban warn" style="margin-top:10px">${ic('alert')}<div>${np==='denied'?'Izin notifikasi ditolak di peramban. Ubah di pengaturan situs bila ingin mengaktifkan.':np==='unsupported'?'Peramban ini tidak mendukung notifikasi.':'Peramban akan meminta izin Anda.'}</div></div>`:''),'',true);
+}
+A.remCopy=()=>{const t=reminderText(myDue());copyText(t).then(()=>toast('Pengingat disalin. Tempel ke pesan atau catatan Anda.'),()=>toast('Salin manual tidak tersedia pada peramban ini.'));return false};
+/* Dipanggil setelah render saat izin diberikan; maksimal sekali sehari. */
+function maybeRemind(force){
+  try{
+    if(!S.session||!S.prefs.remNotif||typeof Notification==='undefined'||Notification.permission!=='granted')return;
+    if(!force&&S.prefs.lastRemind===todayStr())return;
+    const items=myDue().filter(d=>d.level==='overdue'||d.level==='today'||d.level==='soon');
+    S.prefs.lastRemind=todayStr();save();
+    if(!items.length)return;
+    const body=items.slice(0,3).map(d=>d.label+' ('+DUE_TXT(d)+')').join('\n');
+    const opts={body,tag:'rembuk-due',icon:'icons/icon-192.png'};
+    if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(r=>r.showNotification('REMBUK: '+items.length+' tenggat dekat',opts)).catch(()=>new Notification('REMBUK: '+items.length+' tenggat dekat',opts));
+    else new Notification('REMBUK: '+items.length+' tenggat dekat',opts);
+  }catch(e){}
+}
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.bind==='S.prefs.remNotif'&&t.checked&&typeof Notification!=='undefined'&&Notification.permission==='default'){Notification.requestPermission().then(()=>{render();maybeRemind(true)})}else if(t.dataset&&t.dataset.bind==='S.prefs.remNotif'&&t.checked)setTimeout(()=>maybeRemind(true),0)});
 A.nCat=d=>{ui.nCat=d.c};
 A.readOne=d=>{S.notes.find(n=>n.id===d.id).read=true};
 A.openNote2=d=>{const n=S.notes.find(x=>x.id===d.id);n.read=true;if(isRes())go('r-requests');else go(n.cat==='New concern response'?'resolution':n.cat==='Schedule update'?'access':'project',...(n.cat==='New concern response'||n.cat==='Schedule update'?[]:[n.pid]));return false};
-A.emailPrev=()=>{const n=S.notes.filter(x=>x.to===inbox())[0];openModal('Pratinjau email',()=>`<div style="border:1px solid var(--border);border-radius:12px;overflow:hidden"><div style="background:var(--navy);color:#fff;padding:16px;display:flex;gap:10px;align-items:center"><svg width="28" height="28"><use href="#mark"/></svg><b>REMBUK</b></div><div style="padding:20px"><div class="sm muted">Kepada: ${isRes()?'alex@northpoint.id':'admin@northpoint.id'}</div><h3 style="margin:8px 0">${esc(n.title)}</h3><p>${esc(n.body)}</p><p class="sm muted" style="margin:12px 0">Anda menerima email ini karena: ${esc(n.why)}</p><p><b>Tindakan:</b> ${esc(n.action)}<br><b>Tenggat:</b> ${esc(n.deadline)}</p><span class="btn p" style="margin-top:10px">Tinjau di REMBUK</span><p class="sm muted" style="margin-top:16px">Bahasa kami netral: tidak ada tekanan atau persetujuan otomatis.</p></div></div>`,()=>`<button class="btn p" data-act="closeM">Tutup</button>`)};
+A.emailPrev=()=>{const n=S.notes.filter(x=>x.to===inbox())[0];openModal('Pratinjau email',()=>`<div style="border:1px solid var(--border);border-radius:12px;overflow:hidden"><div style="background:var(--navy);color:#fff;padding:16px;display:flex;gap:10px;align-items:center"><svg width="28" height="28"><use href="#mark"/></svg><b>REMBUK</b></div><div style="padding:20px"><div class="sm muted">Kepada: ${esc(S.session.name)}</div><h3 style="margin:8px 0">${esc(n.title)}</h3><p>${esc(n.body)}</p><p class="sm muted" style="margin:12px 0">Anda menerima email ini karena: ${esc(n.why)}</p><p><b>Tindakan:</b> ${esc(n.action)}<br><b>Tenggat:</b> ${esc(n.deadline)}</p><span class="btn p" style="margin-top:10px">Tinjau di REMBUK</span><p class="sm muted" style="margin-top:16px">Bahasa kami netral: tidak ada tekanan atau persetujuan otomatis.</p></div></div>`,()=>`<button class="btn p" data-act="closeM">Tutup</button>`)};
 A.waPrev=()=>{const n=S.notes.filter(x=>x.to===inbox())[0];openModal('Pratinjau WhatsApp (mockup integrasi opsional)',()=>`<div style="background:#e9efe9;border-radius:12px;padding:16px"><div style="background:#fff;border-radius:12px 12px 12px 2px;padding:12px 14px;max-width:340px;box-shadow:0 1px 2px rgba(0,0,0,.1)"><b>REMBUK · Northpoint Residence</b><p style="margin:6px 0">${esc(n.title)}</p><p class="sm muted">${esc(n.why)}</p><p style="margin:6px 0">Tindakan: ${esc(n.action)}</p><span style="color:var(--blue)">Buka tautan aman REMBUK</span></div></div>`,()=>`<button class="btn p" data-act="closeM">Tutup</button>`)};
 
 /* ---------- settings ---------- */
